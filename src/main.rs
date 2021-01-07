@@ -2,26 +2,11 @@ extern crate xml;
 
 use std::fs::File;
 use std::io::BufReader;
+use std::env;
 
-// use std::io::{self, Write};
 
 use xml::reader::{EventReader, XmlEvent};
-// use xml::writer::{EventWriter, EmitterConfig, XmlEvent, Result};
 
-
-// fn handle_event<W: Write>(w: &mut EventWriter<W>, line: String) -> Result<()>{
-
-// 	let line = line.trim();
-// 	let eventL XmlEvent = if line.starts_with("+") && line.len() > 1{
-// 		XmlEvent::start_element(&line[1..]).into()
-// 	} else if line.starts_with("-"){
-// 		XmlEvent::end_element().into()
-// 	} else {
-// 		XmlEvent::characters(&line).into()
-// 	}
-// 	w.write(event)
-
-// }
 
 
 fn indent(size: usize) -> String{
@@ -32,7 +17,11 @@ fn indent(size: usize) -> String{
 
 fn main(){
 
-	let file = File::open("Gene_class.xml").unwrap();
+	let args: Vec<String> = env::args().collect();
+
+	let xmlfile = &args[1];
+
+	let file = File::open(xmlfile).unwrap();
 	let file = BufReader::new(file);
 
 	let parser = EventReader::new(file);
